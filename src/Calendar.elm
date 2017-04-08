@@ -173,12 +173,21 @@ dateRow model dates =
 dateTile : Model -> Date -> Html Msg
 dateTile model date =
     let
+        isOutsideOfMonth =
+            View.month model.view /= Date.month date
+
+        isToday =
+            model.today == date
+
+        isSelected =
+            model.selected == date
+
         contentClasses =
             filterClasses
                 [ True
-                , View.month model.view /= Date.month date
-                , model.today == date
-                , model.selected == date
+                , not isSelected && isOutsideOfMonth
+                , isToday
+                , isSelected
                 ]
                 [ MainCss.CellContent
                 , MainCss.WrongMonth

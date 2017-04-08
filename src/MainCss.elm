@@ -1,7 +1,7 @@
 module MainCss exposing (..)
 
 import Css exposing (..)
-import Css.Colors exposing (black)
+import Css.Colors exposing (black, gray)
 import Css.Elements exposing (..)
 import Css.Namespace exposing (namespace)
 
@@ -83,7 +83,7 @@ css =
             , width (Css.em 5)
             , height (Css.em 5)
             , hover
-                [ backgroundColor lightColor
+                [ backgroundColor discreteColor
                 , borderRadius (pct 50)
                 , color black
                 ]
@@ -92,7 +92,7 @@ css =
             [ displayFlex
             , alignItems center
             , justifyContent center
-            , backgroundColor discreteColor
+            , backgroundColor lightColor
             , borderRadius (pct 500)
             , color black
             , width (Css.em 5)
@@ -102,7 +102,7 @@ css =
             [ fontWeight bold
             ]
         , class WrongMonth
-            [ color lightColor
+            [ color gray
             ]
         ]
 
