@@ -1,25 +1,16 @@
 module Utilities exposing (..)
 
-import List.Extra
 
+conditionFilter : List ( a, Bool ) -> List a
+conditionFilter list =
+    case list of
+        ( item, condition ) :: rest ->
+            case condition of
+                True ->
+                    item :: conditionFilter rest
 
-conditionFilter : List Bool -> List a -> List a
-conditionFilter conditions items =
-    let
-        list =
-            List.Extra.zip conditions items
+                False ->
+                    conditionFilter rest
 
-        iter list =
-            case list of
-                ( condition, item ) :: rest ->
-                    case condition of
-                        True ->
-                            item :: iter rest
-
-                        False ->
-                            iter rest
-
-                [] ->
-                    []
-    in
-        iter list
+        [] ->
+            []

@@ -94,15 +94,17 @@ css =
             , justifyContent center
             , backgroundColor lightColor
             , borderRadius (pct 500)
-            , color black
+            , fontWeight bold
             , width (Css.em 5)
             , height (Css.em 5)
             ]
         , class Today
-            [ fontWeight bold
+            [ fontStyle italic
+            , fontWeight bold
             ]
         , class WrongMonth
             [ color gray
+            , fontStyle italic
             ]
         ]
 

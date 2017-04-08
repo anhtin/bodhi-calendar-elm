@@ -183,17 +183,17 @@ dateTile model date =
             model.selected == date
 
         contentClasses =
-            conditionFilter
-                [ True
-                , not isSelected && isOutsideOfMonth
-                , isToday
-                , isSelected
-                ]
-                [ MainCss.CellContent
-                , MainCss.WrongMonth
-                , MainCss.Today
-                , MainCss.Selected
-                ]
+            MainCss.CellContent
+                :: if isSelected then
+                    conditionFilter
+                        [ ( MainCss.Selected, isSelected )
+                        , ( MainCss.Today, isToday )
+                        ]
+                   else
+                    conditionFilter
+                        [ ( MainCss.WrongMonth, isOutsideOfMonth )
+                        , ( MainCss.Today, isToday )
+                        ]
     in
         div [ class [ MainCss.DateCell ], onClick <| SelectDate date ]
             [ block contentClasses
