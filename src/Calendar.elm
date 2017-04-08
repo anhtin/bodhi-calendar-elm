@@ -2,6 +2,7 @@ module Calendar exposing (Model, Msg(..), init, update, view)
 
 import Html exposing (Html, div, h2, h4, span, b, text)
 import Html.CssHelpers
+import Html.Events exposing (onClick)
 import Bootstrap.Button as Button
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Row as Row
@@ -54,6 +55,7 @@ type Msg
     = NewDateToday Date
     | NextMonth
     | PrevMonth
+    | SelectDate Date
 
 
 
@@ -83,6 +85,13 @@ update msg model =
         PrevMonth ->
             ( { model
                 | view = View.prev model.view
+              }
+            , Cmd.none
+            )
+
+        SelectDate date ->
+            ( { model
+                | selected = date
               }
             , Cmd.none
             )
@@ -142,7 +151,7 @@ dayLabel label =
         [ text label ]
 
 
-dates : Model -> Html msg
+dates : Model -> Html Msg
 dates model =
     let
         view =
@@ -155,13 +164,13 @@ dates model =
             weeks
 
 
-dateRow : Model -> List Date -> Html msg
+dateRow : Model -> List Date -> Html Msg
 dateRow model dates =
     block [ MainCss.DateRow ] <|
         List.map (dateTile model) dates
 
 
-dateTile : Model -> Date -> Html msg
+dateTile : Model -> Date -> Html Msg
 dateTile model date =
     let
         contentClasses =
@@ -177,7 +186,7 @@ dateTile model date =
                 , MainCss.WrongMonth
                 ]
     in
-        block [ MainCss.DateCell ]
+        div [ class [ MainCss.DateCell ], onClick <| SelectDate date ]
             [ block contentClasses
                 [ text <| toString <| Date.day date ]
             ]
