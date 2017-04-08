@@ -9,9 +9,9 @@ import Bootstrap.Grid.Row as Row
 import Bootstrap.Grid.Col as Col
 import Calendar.View as View exposing (View)
 import Date exposing (Date)
-import List.Extra
 import MainCss
 import Task
+import Utilities exposing (conditionFilter)
 
 
 -- Css helpers
@@ -183,7 +183,7 @@ dateTile model date =
             model.selected == date
 
         contentClasses =
-            filterClasses
+            conditionFilter
                 [ True
                 , not isSelected && isOutsideOfMonth
                 , isToday
@@ -199,28 +199,6 @@ dateTile model date =
             [ block contentClasses
                 [ text <| toString <| Date.day date ]
             ]
-
-
-filterClasses : List Bool -> List MainCss.Classes -> List MainCss.Classes
-filterClasses filters classes =
-    let
-        list =
-            List.Extra.zip filters classes
-
-        iter list =
-            case list of
-                ( filter, class ) :: rest ->
-                    case filter of
-                        True ->
-                            class :: iter rest
-
-                        False ->
-                            iter rest
-
-                [] ->
-                    []
-    in
-        iter list
 
 
 monthName : Date.Month -> String
