@@ -1,6 +1,7 @@
 module MainCss exposing (..)
 
 import Css exposing (..)
+import Css.Colors exposing (black)
 import Css.Elements exposing (..)
 import Css.Namespace exposing (namespace)
 
@@ -82,17 +83,18 @@ css =
             , width (Css.em 5)
             , height (Css.em 5)
             , hover
-                [ backgroundColor (rgb 0 0 0)
+                [ backgroundColor lightColor
                 , borderRadius (pct 50)
-                , color (rgb 255 255 255)
+                , color black
                 ]
             ]
         , class Selected
             [ displayFlex
             , alignItems center
             , justifyContent center
-            , backgroundColor grayOutline
+            , backgroundColor discreteColor
             , borderRadius (pct 500)
+            , color black
             , width (Css.em 5)
             , height (Css.em 5)
             ]
@@ -100,16 +102,31 @@ css =
             [ fontWeight bold
             ]
         , class WrongMonth
-            [ color grayOutline
+            [ color lightColor
             ]
         ]
 
 
 grayOutline : Color
 grayOutline =
-    hex ("b5bfce")
+    hex "b5bfce"
 
 
 primaryColor : Color
 primaryColor =
-    rgb 255 0 0
+    hex "535f2f"
+
+
+secondaryColor : Color
+secondaryColor =
+    hex "7f5d53"
+
+
+lightColor : Color
+lightColor =
+    hex "d9c4b3"
+
+
+discreteColor : Color
+discreteColor =
+    hex "a1b182"

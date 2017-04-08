@@ -176,14 +176,14 @@ dateTile model date =
         contentClasses =
             filterClasses
                 [ True
+                , View.month model.view /= Date.month date
                 , model.today == date
                 , model.selected == date
-                , View.month model.view /= Date.month date
                 ]
                 [ MainCss.CellContent
+                , MainCss.WrongMonth
                 , MainCss.Today
                 , MainCss.Selected
-                , MainCss.WrongMonth
                 ]
     in
         div [ class [ MainCss.DateCell ], onClick <| SelectDate date ]
