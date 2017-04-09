@@ -1,7 +1,7 @@
 -- Adapted from https://github.com/isee15/Lunar-Solar-Calendar-Converter
 
 
-module LuniSolar exposing (..)
+module LuniSolar exposing (Lunar, Solar, solarFromDate, solarToLunar)
 
 import Array exposing (Array)
 import Bitwise

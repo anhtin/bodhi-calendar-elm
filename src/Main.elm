@@ -3,7 +3,7 @@ module Main exposing (..)
 import Html exposing (Html, div)
 import Calendar exposing (init, view)
 import Html.CssHelpers
-import MainCss
+import MainCss exposing (Classes(App))
 
 
 -- Css helpers
@@ -74,7 +74,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div [ class [ MainCss.App ] ]
+    div [ class [ App ] ]
         [ Html.map CalendarMsg (Calendar.view model.calendar)
         ]
 

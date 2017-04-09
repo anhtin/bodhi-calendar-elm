@@ -4,12 +4,9 @@ import Html exposing (Html, div, h2, h4, text)
 import Html.CssHelpers
 import Html.Events exposing (onClick)
 import Bootstrap.Button as Button
-import Bootstrap.Grid as Grid
-import Bootstrap.Grid.Row as Row
-import Bootstrap.Grid.Col as Col
 import Calendar.View as View exposing (View)
 import Date exposing (Date)
-import MainCss
+import MainCss exposing (Classes(..))
 import Task
 import Utilities exposing (conditionFilter)
 import LuniSolar exposing (..)
@@ -106,7 +103,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    block [ MainCss.Calendar ]
+    block [ Calendar ]
         (List.intersperse separator
             [ header model.view
             , dates model
@@ -115,7 +112,7 @@ view model =
         )
 
 
-block : List MainCss.Classes -> List (Html msg) -> Html msg
+block : List Classes -> List (Html msg) -> Html msg
 block classes content =
     div [ class classes ]
         content
@@ -123,7 +120,7 @@ block classes content =
 
 separator : Html msg
 separator =
-    block [ MainCss.Separator ] []
+    block [ Separator ] []
 
 
 header : View -> Html Msg
@@ -134,14 +131,14 @@ header view =
             Button.button
                 [ Button.outlineSecondary
                 , Button.onClick msg
-                , Button.attrs [ class [ MainCss.MonthButton ] ]
+                , Button.attrs [ class [ MonthButton ] ]
                 ]
                 [ text label ]
 
         month =
-            block [ MainCss.MonthHeader ]
+            block [ MonthHeader ]
                 [ changeMonthButton "<" PrevMonth
-                , block [ MainCss.MonthLabel ]
+                , block [ MonthLabel ]
                     [ h4 [] [ text <| toString <| View.year view ]
                     , h2 [] [ text <| monthName <| View.month view ]
                     ]
@@ -150,15 +147,15 @@ header view =
 
         dayLabel : String -> Html msg
         dayLabel label =
-            block [ MainCss.DayLabel ]
+            block [ DayLabel ]
                 [ text label ]
 
         week =
-            block [ MainCss.WeekHeader ] <|
+            block [ WeekHeader ] <|
                 List.map dayLabel <|
                     [ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" ]
     in
-        block [ MainCss.Header ]
+        block [ Header ]
             [ month
             , week
             ]
@@ -173,13 +170,13 @@ dates model =
         weeks =
             List.map (dateRow model) <| View.weeks view
     in
-        block [ MainCss.Dates ]
+        block [ Dates ]
             (List.intersperse separator weeks)
 
 
 dateRow : Model -> List Date -> Html Msg
 dateRow model dates =
-    block [ MainCss.DateRow ] <|
+    block [ DateRow ] <|
         List.map (dateTile model) dates
 
 
@@ -202,25 +199,25 @@ dateTile model date =
             model.selected == date
 
         cellClasses =
-            MainCss.DateCell
+            DateCell
                 :: conditionFilter
-                    [ ( MainCss.Today, isToday )
-                    , ( MainCss.Vegetarian, isVegetarian )
-                    , ( MainCss.WrongMonth, isWrongMonth )
-                    , ( MainCss.Selected, isSelected )
+                    [ ( Today, isToday )
+                    , ( Vegetarian, isVegetarian )
+                    , ( WrongMonth, isWrongMonth )
+                    , ( Selected, isSelected )
                     ]
     in
         div [ class cellClasses, onClick <| SelectDate date ]
-            [ block [ MainCss.CellSolar ]
+            [ block [ CellSolar ]
                 [ text <| toString <| Date.day date ]
-            , block [ MainCss.CellLunar ]
+            , block [ CellLunar ]
                 [ text <| toString lunar.day ]
             ]
 
 
 events : Model -> Html msg
 events model =
-    block [ MainCss.EventList ]
+    block [ EventList ]
         []
 
 

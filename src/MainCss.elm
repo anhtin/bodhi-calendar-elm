@@ -1,8 +1,7 @@
 module MainCss exposing (..)
 
 import Css exposing (..)
-import Css.Colors exposing (black, gray)
-import Css.Elements exposing (..)
+import Css.Colors exposing (black)
 import Css.Namespace exposing (namespace)
 
 
@@ -87,16 +86,16 @@ css =
             [ displayFlex
             , alignItems center
             , justifyContent center
-            , width (Css.em 2.5)
-            , height (Css.em 2.5)
+            , width (em 2.5)
+            , height (em 2.5)
             , property "user-select" "none"
             ]
         , class CellSolar
             []
         , class CellLunar
-            [ fontSize (Css.em 0.5)
+            [ fontSize (em 0.5)
             , fontStyle italic
-            , marginTop (Css.em -1)
+            , marginTop (em -1)
             ]
         , class Selected
             [ displayFlex
