@@ -17,6 +17,7 @@ type Classes
     | Dates
     | DateRow
     | DateCell
+    | CellContent
     | CellSolar
     | CellLunar
     | Selected
@@ -61,7 +62,6 @@ css =
         , class WeekHeader
             [ displayFlex
             , justifyContent spaceAround
-            , marginTop (px 20)
             ]
         , class DayLabel
             [ displayFlex
@@ -83,6 +83,13 @@ css =
             , justifyContent spaceAround
             ]
         , class DateCell
+            [ displayFlex
+            , alignItems center
+            , justifyContent center
+            , height (pct 100)
+            , width (pct 100)
+            ]
+        , class CellContent
             [ displayFlex
             , alignItems center
             , justifyContent center

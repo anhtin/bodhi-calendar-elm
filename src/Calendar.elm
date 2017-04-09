@@ -199,7 +199,7 @@ dateTile model date =
             model.selected == date
 
         cellClasses =
-            DateCell
+            CellContent
                 :: conditionFilter
                     [ ( Today, isToday )
                     , ( Vegetarian, isVegetarian )
@@ -207,11 +207,13 @@ dateTile model date =
                     , ( Selected, isSelected )
                     ]
     in
-        div [ class cellClasses, onClick <| SelectDate date ]
-            [ block [ CellSolar ]
-                [ text <| toString <| Date.day date ]
-            , block [ CellLunar ]
-                [ text <| toString lunar.day ]
+        div [ class [ DateCell ], onClick <| SelectDate date ]
+            [ block cellClasses
+                [ block [ CellSolar ]
+                    [ text <| toString <| Date.day date ]
+                , block [ CellLunar ]
+                    [ text <| toString lunar.day ]
+                ]
             ]
 
 
