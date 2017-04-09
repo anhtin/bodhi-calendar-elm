@@ -1,0 +1,117 @@
+.bodhiApp {
+    height: 100%;
+    min-height: 500px;
+    padding-top: 20px;
+}
+
+.bodhiCalendar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.bodhiHeader {
+    display: flex;
+    flex-basis: 1px;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.bodhiMonthHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.bodhiMonthLabel {
+    width: 60%;
+}
+
+.bodhiWeekHeader {
+    display: flex;
+    justify-content: space-around;
+}
+
+.bodhiDayLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    width: 100%;
+}
+
+.bodhiDates {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-basis: 1px;
+    flex-grow: 3;
+    padding: 5px 0;
+}
+
+.bodhiDateRow {
+    display: flex;
+    justify-content: space-around;
+}
+
+.bodhiDateCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.bodhiCellContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5em;
+    height: 2.5em;
+    user-select: none;
+}
+
+.bodhiCellLunar {
+    font-size: 0.5em;
+    font-style: italic;
+    margin-top: -1em;
+}
+
+.bodhiSelected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #7f5d53;
+    border-radius: 500%;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+
+.bodhiToday {
+    font-style: italic;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #111111;
+}
+
+.bodhiWrongMonth {
+    opacity: 0.5;
+}
+
+.bodhiVegetarian {
+    color: #a1b182;
+    font-weight: bold;
+}
+
+.bodhiEventList {
+    flex-basis: 1px;
+    flex-grow: 2;
+}
+
+.bodhiSeparator {
+    border-bottom: 1px solid #b5bfce;
+    height: 1px;
+    width: 100%;
+}
