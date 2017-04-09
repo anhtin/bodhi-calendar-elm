@@ -107,10 +107,12 @@ update msg model =
 view : Model -> Html Msg
 view model =
     block [ MainCss.Calendar ]
-        [ header model.view
-        , dayLabels
-        , dates model
-        ]
+        (List.intersperse separator
+            [ header model.view
+            , dates model
+            , events model
+            ]
+        )
 
 
 block : List MainCss.Classes -> List (Html msg) -> Html msg
@@ -119,39 +121,47 @@ block classes content =
         content
 
 
+separator : Html msg
+separator =
+    block [ MainCss.Separator ] []
+
+
 header : View -> Html Msg
 header view =
-    block [ MainCss.Header ]
-        [ changeMonthButton "<" PrevMonth
-        , block [ MainCss.HeaderLabel ]
-            [ h4 [] [ text <| toString <| View.year view ]
-            , h2 [] [ text <| monthName <| View.month view ]
+    let
+        changeMonthButton : String -> Msg -> Html Msg
+        changeMonthButton label msg =
+            Button.button
+                [ Button.outlineSecondary
+                , Button.onClick msg
+                , Button.attrs [ class [ MainCss.MonthButton ] ]
+                ]
+                [ text label ]
+
+        month =
+            block [ MainCss.MonthHeader ]
+                [ changeMonthButton "<" PrevMonth
+                , block [ MainCss.MonthLabel ]
+                    [ h4 [] [ text <| toString <| View.year view ]
+                    , h2 [] [ text <| monthName <| View.month view ]
+                    ]
+                , changeMonthButton ">" NextMonth
+                ]
+
+        dayLabel : String -> Html msg
+        dayLabel label =
+            block [ MainCss.DayLabel ]
+                [ text label ]
+
+        week =
+            block [ MainCss.WeekHeader ] <|
+                List.map dayLabel <|
+                    [ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" ]
+    in
+        block [ MainCss.Header ]
+            [ month
+            , week
             ]
-        , changeMonthButton ">" NextMonth
-        ]
-
-
-changeMonthButton : String -> Msg -> Html Msg
-changeMonthButton label msg =
-    Button.button
-        [ Button.outlineSecondary
-        , Button.onClick msg
-        , Button.attrs [ class [ MainCss.HeaderButton ] ]
-        ]
-        [ text label ]
-
-
-dayLabels : Html msg
-dayLabels =
-    block [ MainCss.DayLabels ] <|
-        List.map dayLabel <|
-            [ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" ]
-
-
-dayLabel : String -> Html msg
-dayLabel label =
-    block [ MainCss.DayLabel ]
-        [ text label ]
 
 
 dates : Model -> Html Msg
@@ -164,7 +174,7 @@ dates model =
             List.map (dateRow model) <| View.weeks view
     in
         block [ MainCss.Dates ]
-            weeks
+            (List.intersperse separator weeks)
 
 
 dateRow : Model -> List Date -> Html Msg
@@ -182,7 +192,7 @@ dateTile model date =
         isVegetarian =
             List.member lunar.day model.vegetarianDays
 
-        isOutsideOfMonth =
+        isWrongMonth =
             View.month model.view /= Date.month date
 
         isToday =
@@ -191,29 +201,27 @@ dateTile model date =
         isSelected =
             model.selected == date
 
-        contentClasses =
-            MainCss.CellContent
-                :: if isSelected then
-                    conditionFilter
-                        [ ( MainCss.Selected, isSelected )
-                        , ( MainCss.Today, isToday )
-                        , ( MainCss.Vegetarian, isVegetarian )
-                        ]
-                   else
-                    conditionFilter
-                        [ ( MainCss.WrongMonth, isOutsideOfMonth )
-                        , ( MainCss.Today, isToday )
-                        , ( MainCss.Vegetarian, isVegetarian )
-                        ]
+        cellClasses =
+            MainCss.DateCell
+                :: conditionFilter
+                    [ ( MainCss.Today, isToday )
+                    , ( MainCss.Vegetarian, isVegetarian )
+                    , ( MainCss.WrongMonth, isWrongMonth )
+                    , ( MainCss.Selected, isSelected )
+                    ]
     in
-        div [ class [ MainCss.DateCell ], onClick <| SelectDate date ]
-            [ block contentClasses
-                [ block [ MainCss.CellSolar ]
-                    [ text <| toString <| Date.day date ]
-                , block [ MainCss.CellLunar ]
-                    [ text <| toString lunar.day ]
-                ]
+        div [ class cellClasses, onClick <| SelectDate date ]
+            [ block [ MainCss.CellSolar ]
+                [ text <| toString <| Date.day date ]
+            , block [ MainCss.CellLunar ]
+                [ text <| toString lunar.day ]
             ]
+
+
+events : Model -> Html msg
+events model =
+    block [ MainCss.EventList ]
+        []
 
 
 monthName : Date.Month -> String

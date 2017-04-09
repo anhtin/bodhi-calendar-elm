@@ -10,53 +10,64 @@ type Classes
     = App
     | Calendar
     | Header
-    | HeaderButton
-    | HeaderLabel
-    | DayLabels
+    | MonthHeader
+    | MonthButton
+    | MonthLabel
+    | WeekHeader
     | DayLabel
     | Dates
     | DateRow
     | DateCell
-    | CellContent
     | CellSolar
     | CellLunar
     | Selected
     | Today
     | WrongMonth
     | Vegetarian
+    | EventList
+    | Separator
 
 
 css =
     (stylesheet << namespace "bodhi")
         [ class App
-            [ minWidth (px 500)
-            , height (pct 100)
-            , padding (px 5)
+            [ height (pct 100)
+            , minHeight (px 500)
+            , paddingTop (px 20)
             ]
         , class Calendar
-            [ height (pct 100)
+            [ displayFlex
+            , flexDirection column
+            , justifyContent spaceAround
+            , height (pct 100)
             ]
         , class Header
+            [ displayFlex
+            , flexBasis (px 1)
+            , flexGrow (int 1)
+            , flexDirection column
+            , justifyContent spaceAround
+            ]
+        , class MonthHeader
             [ displayFlex
             , alignItems center
             , justifyContent spaceAround
             , textAlign center
             ]
-        , class HeaderButton
+        , class MonthButton
             []
-        , class HeaderLabel
+        , class MonthLabel
             [ width (pct 60)
             ]
-        , class DayLabels
+        , class WeekHeader
             [ displayFlex
             , justifyContent spaceAround
-            , height (Css.em 5)
+            , marginTop (px 20)
             ]
         , class DayLabel
             [ displayFlex
             , alignItems center
             , justifyContent center
-            , borderBottom3 (px 1) solid grayOutline
             , fontWeight bold
             , width (pct 100)
             ]
@@ -64,36 +75,28 @@ css =
             [ displayFlex
             , flexDirection column
             , justifyContent spaceAround
-            , padding zero
-            , height (pct 100)
+            , flexBasis (px 1)
+            , flexGrow (int 3)
+            , padding2 (px 5) zero
             ]
         , class DateRow
             [ displayFlex
             , justifyContent spaceAround
-            , height (pct 100)
             ]
         , class DateCell
             [ displayFlex
-            , flexGrow (int 1)
             , alignItems center
             , justifyContent center
-            , borderBottom3 (px 1) solid grayOutline
-            ]
-        , class CellContent
-            [ displayFlex
-            , alignItems center
-            , justifyContent center
-            , width (Css.em 5)
-            , height (Css.em 5)
+            , width (Css.em 2.5)
+            , height (Css.em 2.5)
+            , property "user-select" "none"
             ]
         , class CellSolar
             []
         , class CellLunar
-            [ position absolute
-            , marginLeft (Css.em 1.2)
-            , marginTop (Css.em -1.2)
-            , fontSize (Css.em 0.7)
+            [ fontSize (Css.em 0.5)
             , fontStyle italic
+            , marginTop (Css.em -1)
             ]
         , class Selected
             [ displayFlex
@@ -103,20 +106,27 @@ css =
             , borderRadius (pct 500)
             , color (rgb 255 255 255)
             , fontWeight bold
-            , width (Css.em 5)
-            , height (Css.em 5)
             ]
         , class Today
             [ fontStyle italic
             , fontWeight bold
+            , textShadow4 (px 1) (px 1) (px 1) black
             ]
         , class WrongMonth
-            [ color gray
-            , fontStyle italic
+            [ opacity (num 0.5)
             ]
         , class Vegetarian
             [ color discreteColor
             , fontWeight bold
+            ]
+        , class EventList
+            [ flexBasis (px 1)
+            , flexGrow (int 2)
+            ]
+        , class Separator
+            [ borderBottom3 (px 1) solid grayOutline
+            , height (px 1)
+            , width (pct 100)
             ]
         ]
 
