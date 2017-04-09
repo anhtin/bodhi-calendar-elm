@@ -1,6 +1,6 @@
 module Calendar exposing (Model, Msg(..), init, update, view)
 
-import Html exposing (Html, div, h2, h4, span, b, text)
+import Html exposing (Html, div, h2, h4, text)
 import Html.CssHelpers
 import Html.Events exposing (onClick)
 import Bootstrap.Button as Button
@@ -12,6 +12,7 @@ import Date exposing (Date)
 import MainCss
 import Task
 import Utilities exposing (conditionFilter)
+import LuniSolar exposing (..)
 
 
 -- Css helpers
@@ -29,6 +30,7 @@ type alias Model =
     { today : Date
     , selected : Date
     , view : View
+    , vegetarianDays : List Int
     }
 
 
@@ -42,6 +44,7 @@ init =
             { today = view
             , selected = view
             , view = view
+            , vegetarianDays = [ 1, 8, 14, 15, 18, 23, 24, 27, 29, 30 ]
             }
     in
         ( model, Task.perform NewDateToday Date.now )
@@ -173,6 +176,12 @@ dateRow model dates =
 dateTile : Model -> Date -> Html Msg
 dateTile model date =
     let
+        lunar =
+            LuniSolar.solarToLunar <| LuniSolar.solarFromDate date
+
+        isVegetarian =
+            List.member lunar.day model.vegetarianDays
+
         isOutsideOfMonth =
             View.month model.view /= Date.month date
 
@@ -188,16 +197,22 @@ dateTile model date =
                     conditionFilter
                         [ ( MainCss.Selected, isSelected )
                         , ( MainCss.Today, isToday )
+                        , ( MainCss.Vegetarian, isVegetarian )
                         ]
                    else
                     conditionFilter
                         [ ( MainCss.WrongMonth, isOutsideOfMonth )
                         , ( MainCss.Today, isToday )
+                        , ( MainCss.Vegetarian, isVegetarian )
                         ]
     in
         div [ class [ MainCss.DateCell ], onClick <| SelectDate date ]
             [ block contentClasses
-                [ text <| toString <| Date.day date ]
+                [ block [ MainCss.CellSolar ]
+                    [ text <| toString <| Date.day date ]
+                , block [ MainCss.CellLunar ]
+                    [ text <| toString lunar.day ]
+                ]
             ]
 
 

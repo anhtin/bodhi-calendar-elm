@@ -18,9 +18,12 @@ type Classes
     | DateRow
     | DateCell
     | CellContent
+    | CellSolar
+    | CellLunar
     | Selected
     | Today
     | WrongMonth
+    | Vegetarian
 
 
 css =
@@ -82,18 +85,23 @@ css =
             , justifyContent center
             , width (Css.em 5)
             , height (Css.em 5)
-            , hover
-                [ backgroundColor discreteColor
-                , borderRadius (pct 50)
-                , color black
-                ]
+            ]
+        , class CellSolar
+            []
+        , class CellLunar
+            [ position absolute
+            , marginLeft (Css.em 1.2)
+            , marginTop (Css.em -1.2)
+            , fontSize (Css.em 0.7)
+            , fontStyle italic
             ]
         , class Selected
             [ displayFlex
             , alignItems center
             , justifyContent center
-            , backgroundColor lightColor
+            , backgroundColor secondaryColor
             , borderRadius (pct 500)
+            , color (rgb 255 255 255)
             , fontWeight bold
             , width (Css.em 5)
             , height (Css.em 5)
@@ -105,6 +113,10 @@ css =
         , class WrongMonth
             [ color gray
             , fontStyle italic
+            ]
+        , class Vegetarian
+            [ color discreteColor
+            , fontWeight bold
             ]
         ]
 
