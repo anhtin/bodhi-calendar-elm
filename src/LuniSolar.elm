@@ -106,7 +106,7 @@ solarToLunar solar =
                             else
                                 ( month, offset )
             in
-                case iter 12 offset 1 of
+                case iter 12 (offset + 1) 1 of
                     ( month, day ) ->
                         if leap /= 0 && month > leap then
                             if month == leap + 1 then
